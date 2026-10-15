@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Document(collection = "products")
-public class Product {
+public class Product  implements java.io.Serializable{
 
     @Id
     private String id;

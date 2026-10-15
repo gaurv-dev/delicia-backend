@@ -4,6 +4,8 @@ import com.gaurav.delicia.exception.ResourceNotFoundException;
 import com.gaurav.delicia.model.Product;
 import com.gaurav.delicia.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +16,7 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
+    @Cacheable("products")
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
@@ -35,6 +38,7 @@ public class ProductService {
         return productRepository.findByEggless(eggless);
     }
 
+    @CacheEvict(value = "products", allEntries = true)
     public Product createProduct(Product product) {
         return productRepository.save(product);
     }
